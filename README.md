@@ -2,7 +2,7 @@
 
 1. perceptro.py
 
-shell```
+```
 \Machine_Learning> python .\perceptron.py           
 Learned weights: [113. -28. -12.]
 
