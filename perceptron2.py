@@ -2,7 +2,7 @@ import pylab
 from matplotlib import gridspec
 from sklearn.datasets import make_classification
 import numpy as np 
-from ipywidgets import interact,interactive,fixed
+from ipywidgets import  interact,interactive,fixed
 import pickle
 import os
 import gzip
@@ -31,3 +31,8 @@ def  plot_dataset(suptitle,features,labels):
     fig.show()
 plot_dataset("Training Dataset",train_x,train_label)
 pylab.show()
+
+pos_example=np.array([[t[0],t[1],1] for i,t in enumerate(train_x) if train_label[i]>0])
+neg_example=np.array([[t[0],t[1],1] for i,t in enumerate(train_x) if train_label[i]<0])
+print(pos_example[0:3])
+
