@@ -1,3 +1,35 @@
+"""Perceptron
+A perceptron is a machine learning algorithm that takes inputs, multiplies them by weights, sums them up, and decides if the result is positive or negative.
+
+Why POSITIVE side exists:
+The perceptron needs to detect something — that "something" is always labeled positive.
+We are LOOKING for cancer → cancer = positive
+We are LOOKING for spam   → spam   = positive
+We are LOOKING for fraud  → fraud  = positive
+Positive simply means "YES this is the thing I'm trying to find"
+
+Why NEGATIVE side exists:
+The perceptron needs something to compare against — it can't learn "what is cancer" without also knowing "what is NOT cancer"
+Without negative examples:
+perceptron sees only cancer → labels EVERYTHING as cancer ❌
+
+With negative examples:
+perceptron sees cancer AND healthy → learns the DIFFERENCE ✅
+
+Simple truth:
+ONE class alone = useless
+TWO classes     = can learn the boundary between them!
+Like teaching a child:
+Show only cats     → child calls everything a cat ❌
+Show cats AND dogs → child learns the difference   ✅
+
+So in short:
+ClassPurposePositiveThe thing you WANT to detectNegativeThe contrast that helps learning happen
+Both are equally important — no negative = no learning"""
+
+
+
+
 import numpy as np
 import random
 
@@ -19,9 +51,7 @@ def train(positive_examples, negative_examples, num_iterations=100, eta=1):
     return weights
 
 
-# ── DATA ──────────────────────────────────────────────────────
-# Each point = [tumor_size, patient_age, 1]
-#                                        ↑ bias term (always 1)
+
 
 positive_examples = [   # Malignant (cancerous)
     np.array([20, 60, 1]),
@@ -48,7 +78,7 @@ def predict(point, weights):
     if z >= 0:
         return "Malignant (Positive)"
     else:
-        return "Benign (Negative)"
+        return "Benign (Negative)"  
 
 
 # ── TEST ──────────────────────────────────────────────────────
