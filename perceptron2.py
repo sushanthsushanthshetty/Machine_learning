@@ -36,3 +36,37 @@ pos_example=np.array([[t[0],t[1],1] for i,t in enumerate(train_x) if train_label
 neg_example=np.array([[t[0],t[1],1] for i,t in enumerate(train_x) if train_label[i]<0])
 print(pos_example[0:3])
 
+def train(positive_examples, negative_examples, num_iterations = 100, learning_rate = 0.01):
+    num_dims = positive_examples.shape[1]
+    
+    # Initialize weights. 
+    # We initialize with 0 for simplicity, but random initialization is also a good idea
+    weights = np.zeros((num_dims,1)) 
+    
+    pos_count = positive_examples.shape[0]
+    neg_count = negative_examples.shape[0]
+    
+    report_frequency = 10
+    
+    for i in range(num_iterations):
+        # Pick one positive and one negative example
+        pos = random.choice(positive_examples)
+        neg = random.choice(negative_examples)
+
+        z = np.dot(pos, weights)   
+        if z < 0: # positive example was classified as negative
+            weights = weights + learning_rate * pos.reshape(weights.shape)
+
+        z  = np.dot(neg, weights)
+        if z >= 0: # negative example was classified as positive
+            weights = weights - learning_rate * neg.reshape(weights.shape)
+            
+        # Periodically, print out the current accuracy on all examples 
+        if i % report_frequency == 0:             
+            pos_out = np.dot(positive_examples, weights)
+            neg_out = np.dot(negative_examples, weights)        
+            pos_correct = (pos_out >= 0).sum() / float(pos_count)
+            neg_correct = (neg_out < 0).sum() / float(neg_count)
+            print("Iteration={}, pos correct={}, neg correct={}".format(i,pos_correct,neg_correct))
+
+    return weights
